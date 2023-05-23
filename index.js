@@ -7,14 +7,8 @@ const fundButton = document.getElementById("fundButton")
 const balanceButton = document.getElementById("balanceButton")
 const specialButton = document.getElementById("specialButton")
 const funder = document.getElementById("funderAddress")
-connectButton.onclick = connect
-withdrawButton.onclick = withdraw
-fundButton.onclick = fund
-balanceButton.onclick = getBalance
-specialButton.onclick = getAmountFunded
-funder.onclick = funderAddress
 
-async function connect() {
+const connect = async () => {
     if (typeof window.ethereum !== "undefined") {
         try {
             await ethereum.request({ method: "eth_requestAccounts" })
@@ -29,7 +23,7 @@ async function connect() {
     }
 }
 
-async function withdraw() {
+const withdraw = async () => {
     console.log(`Withdrawing...`)
     if (typeof window.ethereum !== "undefined") {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -51,7 +45,7 @@ async function withdraw() {
     }
 }
 
-async function fund() {
+const fund = async () => {
     const ethAmount = document.getElementById("ethAmount").value
     console.log(`Funding with ${ethAmount}...`)
     if (typeof window.ethereum !== "undefined") {
@@ -71,7 +65,7 @@ async function fund() {
     }
 }
 
-async function getBalance() {
+const getBalance = async () => {
     if (typeof window.ethereum !== "undefined") {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         try {
@@ -86,7 +80,7 @@ async function getBalance() {
     }
 }
 
-async function getAmountFunded() {
+const getAmountFunded = async () => {
     const accounts = await ethereum.request({ method: "eth_accounts" })
     if (typeof window.ethereum !== "undefined") {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -106,12 +100,12 @@ async function getAmountFunded() {
     }
 }
 
-async function funderAddress() {
+const funderAddress = async () => {
     const accounts = await ethereum.request({ method: "eth_accounts" })
     funder.innerHTML = accounts[0].toString()
 }
 
-function listenForTransactionMine(transactionResponse, provider) {
+const listenForTransactionMine = (transactionResponse, provider) => {
     console.log(`Mining ${transactionResponse.hash}`)
     return new Promise((resolve, reject) => {
         try {
@@ -126,3 +120,10 @@ function listenForTransactionMine(transactionResponse, provider) {
         }
     })
 }
+
+connectButton.onclick = connect
+withdrawButton.onclick = withdraw
+fundButton.onclick = fund
+balanceButton.onclick = getBalance
+specialButton.onclick = getAmountFunded
+funder.onclick = funderAddress
