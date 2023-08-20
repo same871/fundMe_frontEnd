@@ -100,9 +100,12 @@ const getAmountFunded = async () => {
     }
 }
 
+const shortenAddress = (address) =>
+    `${address.slice(0, 5)}...${address.slice(address.length - 6)}`
+
 const funderAddress = async () => {
     const accounts = await ethereum.request({ method: "eth_accounts" })
-    funder.innerHTML = accounts[0].toString()
+    funder.innerHTML = shortenAddress(accounts[0])
 }
 
 const listenForTransactionMine = (transactionResponse, provider) => {
